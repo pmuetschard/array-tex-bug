@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static int mode = 1;
+
 static void error_callback(int error, const char* description) {
 	fprintf(stderr, "Error: %s\n", description);
 }
@@ -11,6 +13,8 @@ static void error_callback(int error, const char* description) {
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	} else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+		mode = ((mode + 2) % 3) - 1;
 	}
 }
 
@@ -210,12 +214,12 @@ int main(int argc, char** argv) {
 
 		glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textures[0], 0, 0);
 		glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textures[1], 0, 0);
-		glUniform1f(uRot, rot - 0.05);
+		glUniform1f(uRot, rot + mode * 0.05);
 		glDrawArrays(GL_TRIANGLES, 0, 6 * 2 * 3);
 		
 		glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textures[0], 0, 1);
 		glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textures[1], 0, 1);
-		glUniform1f(uRot, rot + 0.05);
+		glUniform1f(uRot, rot - mode * 0.05);
 		glDrawArrays(GL_TRIANGLES, 0, 6 * 2 * 3);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
