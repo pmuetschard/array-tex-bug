@@ -45,3 +45,8 @@ bind layer 1 of the arrays to the framebuffer's color and depth attachments
 render a slightly different scene
 // Observe the rendering artifacts in the second scene, due to framgents failing the depth test
 ```
+
+## Screenshots
+
+![Mode 1 - Artifacts on the left side](screenshots/left.png)
+![Mode 2 - Artifacts on the right side](screenshots/right.png)
